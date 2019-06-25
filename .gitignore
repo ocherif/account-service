@@ -28,3 +28,6 @@ target/
 # Idea folder
 *.iml
 .idea/*
+
+# PID file
+pid.txt

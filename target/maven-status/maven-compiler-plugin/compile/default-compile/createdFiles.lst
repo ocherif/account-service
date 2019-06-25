@@ -1,0 +1,8 @@
+com\services\account\AccountApplication.class
+com\services\account\repository\AccountRepository.class
+com\services\account\service\AccountService.class
+com\services\account\controller\AccountController.class
+com\services\account\controller\AccountStub.class
+com\services\account\model\Account$AccountBuilder.class
+com\services\account\service\IAccountService.class
+com\services\account\model\Account.class

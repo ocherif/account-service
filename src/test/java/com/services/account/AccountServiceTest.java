@@ -38,12 +38,12 @@ public class AccountServiceTest {
     @Test
     public void testFindAll() {
         Account account1 = new Account.AccountBuilder()
-                .withName("Toto")
+                .withCustomerName("Toto")
                 .withPosition(BigDecimal.valueOf(50000))
                 .build();
 
         Account account2 = new Account.AccountBuilder()
-                .withName("Tata")
+                .withCustomerName("Tata")
                 .withPosition(BigDecimal.valueOf(20000))
                 .build();
 
@@ -55,7 +55,7 @@ public class AccountServiceTest {
     @Test
     public void testFindById() {
         Account account = new Account.AccountBuilder()
-                .withName("Toto")
+                .withCustomerName("Toto")
                 .withPosition(new BigDecimal(50000))
                 .build();
 
@@ -71,7 +71,7 @@ public class AccountServiceTest {
     @Test
     public void testCreditRequestRefused(){
         Account account = new Account.AccountBuilder()
-                .withName("Toto")
+                .withCustomerName("Toto")
                 .withPosition(new BigDecimal(50000))
                 .build();
 
@@ -83,7 +83,7 @@ public class AccountServiceTest {
     @Test
     public void testCreditRequestAccepted(){
         Account account = new Account.AccountBuilder()
-                .withName("Toto")
+                .withCustomerName("Toto")
                 .withPosition(new BigDecimal(50000))
                 .build();
 

@@ -11,9 +11,10 @@ public class Account extends Object {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "customer_id", nullable = false)
+    private Long customerId;
 
-    private String name;
+    private String customerName;
 
     private BigDecimal position;
 
@@ -26,33 +27,34 @@ public class Account extends Object {
 
         Account Account = (Account) obj;
 
-        return (id == Account.id) &&
-                (name.equals(Account.name))
+        return (customerId == Account.customerId) &&
+                (customerName.equals(Account.customerName))
                         && (position.compareTo((Account.position)) == 0);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode() *  name.hashCode() * position.hashCode();
+        return customerId.hashCode() *  customerName.hashCode() * position.hashCode();
     }
 
     public static class AccountBuilder {
 
-        private long id;
+        private long customerId;
 
-        private String name;
+        @Column(name="customer_name", nullable = false, length = 128)
+        private String customerName;
 
         private BigDecimal position;
 
         public AccountBuilder() {
         }
 
-        public AccountBuilder(long id) {
-            this.id = id;
+        public AccountBuilder(long customerId) {
+            this.customerId = customerId;
         }
 
-        public AccountBuilder withName(String name) {
-            this.name = name;
+        public AccountBuilder withCustomerName(String customerName) {
+            this.customerName = customerName;
             return this;
         }
 
@@ -63,7 +65,7 @@ public class Account extends Object {
 
         public Account build() {
             Account Account = new Account();
-            Account.setName(this.name);
+            Account.setCustomerName(this.customerName);
             Account.setPosition(this.position);
             return Account;
         }

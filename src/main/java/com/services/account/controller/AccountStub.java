@@ -12,12 +12,12 @@ public class AccountStub {
 
     static {
         Account account1 = new Account.AccountBuilder(1)
-                .withName("Toto")
+                .withCustomerName("Toto")
                 .withPosition(new BigDecimal(50000))
                 .build();
 
         Account account2 = new Account.AccountBuilder(1)
-                .withName("Tata")
+                .withCustomerName("Tata")
                 .withPosition(new BigDecimal(10000))
                 .build();
 

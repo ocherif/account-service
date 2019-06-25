@@ -6,7 +6,6 @@ import com.services.account.model.Account;
 import org.hamcrest.Matchers;
 import org.json.JSONException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -17,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.net.URI;
@@ -34,7 +32,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class AccountControllerTest {
 
-    public static final String API_V1_ROOT_RELATIVE_PATH = "/api/v1";
+    public static final String API_V1_ROOT_RELATIVE_PATH = "api/v1";
 
     TestRestTemplate restTemplate;
 
@@ -59,21 +57,20 @@ public class AccountControllerTest {
                 .writer()
                 .writeValueAsString(response.getBody());
 
-        String expectedJson = "[{\"id\":1,\"name\":\"Toto\",\"position\":80000.0},{\"id\":2,\"name\":\"Tata\",\"position\":600000.0}]";
-
-        System.out.println(resultJson);
+        String expectedJson = "[{\"customerId\":1,\"customerName\":\"Toto\",\"position\":80000.0}," +
+                "{\"customerId\":2,\"customerName\":\"Tata\",\"position\":600000.0}]";
 
         JSONAssert.assertEquals(expectedJson, resultJson, false);
     }
 
     @Test
-    public void testSaveProduct() throws URISyntaxException, JsonProcessingException {
+    public void testSaveProduct() throws URISyntaxException {
         Account account = new Account.AccountBuilder()
-                .withName("Titi")
+                .withCustomerName("Titi")
                 .withPosition(new BigDecimal(45000))
                 .build();
 
-        String url = String.join("/", getUrlWithPort(), API_V1_ROOT_RELATIVE_PATH, "/accounts");
+        String url = String.join("/", getUrlWithPort(), API_V1_ROOT_RELATIVE_PATH, "accounts");
         URI uri = new URI(url);
 
         ResponseEntity<Account> response = restTemplate.postForEntity(uri, account, Account.class);
@@ -84,11 +81,11 @@ public class AccountControllerTest {
     @Test
     public void testCheckCustomerPosition(){
         Map<String, Object> params = new HashMap<>();
-        params.put("id", 1L);
+        params.put("customerId", 1L);
         params.put("creditAmount", new BigDecimal(5000));
         params.put("creditTermAmount", new BigDecimal(200));
 
-        ResponseEntity<Boolean> response = restTemplate.getForEntity(String.join("/", getUrlWithPort(), API_V1_ROOT_RELATIVE_PATH,"accounts/verify/{id}/{creditAmount}/{creditTermAmount}"), Boolean.class, params);
+        ResponseEntity<Boolean> response = restTemplate.getForEntity(String.join("/", getUrlWithPort(), API_V1_ROOT_RELATIVE_PATH,"accounts/verify/{customerId}/{creditAmount}/{creditTermAmount}"), Boolean.class, params);
 
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
 

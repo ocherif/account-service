@@ -20,9 +20,9 @@ public class AccountController {
     IAccountService accountservice;
 
     //@RequestMapping(value = "accounts", method = RequestMethod.GET)
-    @GetMapping(value = "/accounts/{id}")
-    Account AccountList(@PathVariable Long id) {
-        return accountservice.findById(id);
+    @GetMapping(value = "/accounts/{customerId}")
+    Account AccountList(@PathVariable Long customerId) {
+        return accountservice.findById(customerId);
     }
 
     @GetMapping(value = "/accounts")
@@ -30,22 +30,22 @@ public class AccountController {
         return accountservice.findAll();
     }
 
-    @DeleteMapping(value = "/accounts/{id}")
-    void removeAccount(@PathVariable Long id){
-        accountservice.deleteById(id);
+    @DeleteMapping(value = "/accounts/{customerId}")
+    void removeAccount(@PathVariable Long customerId){
+        accountservice.deleteById(customerId);
     }
 
     @PostMapping(value = "/accounts")
     public ResponseEntity<Object> saveAccount(@RequestBody Account Account){
         Account savedAccount = accountservice.save(Account);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(savedAccount.getId()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{customerId}")
+                .buildAndExpand(savedAccount.getCustomerId()).toUri();
 
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping(value = "accounts/verify/{id}/{creditAmount}/{creditTermAmount}")
-    public boolean checkCustomerPosition(@PathVariable Long id, @PathVariable BigDecimal creditAmount, @PathVariable BigDecimal creditTermAmount){
-        return accountservice.checkCustomerPosition(id, creditAmount, creditTermAmount);
+    @GetMapping(value = "accounts/verify/{customerId}/{creditAmount}/{creditTermAmount}")
+    public boolean checkCustomerPosition(@PathVariable Long customerId, @PathVariable BigDecimal creditAmount, @PathVariable BigDecimal creditTermAmount){
+        return accountservice.checkCustomerPosition(customerId, creditAmount, creditTermAmount);
     }
 }

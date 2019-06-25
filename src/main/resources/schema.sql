@@ -1,0 +1,8 @@
+--DROP TABLE IF EXISTS product;
+
+CREATE TABLE product (
+    id     INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name   VARCHAR(128) NOT NULL,
+    price  NUMERIC(10, 2),
+    rating INTEGER
+);
